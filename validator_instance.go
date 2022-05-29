@@ -154,6 +154,16 @@ func (v *Validate) SetTagName(name string) {
 	v.tagName = name
 }
 
+func (v *Validate) GetValidatorFunc(ut ut.Translator, tag string) (TranslationFunc, bool) {
+	m, ok := v.transTagFunc[ut]
+	if !ok {
+		return nil, false
+	}
+
+	fn, ok := m[tag]
+	return fn, ok
+}
+
 // ValidateMapCtx validates a map using a map of validation rules and allows passing of contextual
 // validation information via context.Context.
 func (v Validate) ValidateMapCtx(ctx context.Context, data map[string]interface{}, rules map[string]interface{}) map[string]interface{} {

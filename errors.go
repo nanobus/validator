@@ -78,6 +78,7 @@ func (ve ValidationErrors) Translate(ut ut.Translator) ValidationErrorsTranslati
 
 // FieldError contains all functions to get error details
 type FieldError interface {
+	Validate() *Validate
 
 	// Tag returns the validation tag that failed. if the
 	// validation was an alias, this will return the
@@ -176,6 +177,10 @@ type fieldError struct {
 	param          string
 	kind           reflect.Kind
 	typ            reflect.Type
+}
+
+func (fe *fieldError) Validate() *Validate {
+	return fe.v
 }
 
 // Tag returns the validation tag that failed.
